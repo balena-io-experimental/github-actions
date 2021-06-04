@@ -1,0 +1,17 @@
+# action.yml
+name: 'whoami'
+description: 'Execute balena CLI whoami command'
+inputs:
+  api_token:
+    description: 'Your balenaCloud API token'
+    required: true
+outputs:
+  username:
+    description: 'Username of authneticated account'
+  email:
+    description: 'Email of authneticated account'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    API_TOKEN: ${{ inputs.api_token }}
