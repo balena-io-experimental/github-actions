@@ -1,0 +1,20 @@
+# action.yml
+name: 'build'
+description: 'Send source to balenaCloud builders'
+inputs:
+  api_token:
+    description: 'Your balenaCloud API token'
+    required: true
+  application:
+    description: 'Name of the application you want to build the release for'
+    required: true
+outputs:
+  releaseId:
+    description: 'ID of the release built'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    API_TOKEN: ${{ inputs.api_token }}
+  args:
+    - '${{ inputs.api_token }}'

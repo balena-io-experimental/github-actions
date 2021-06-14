@@ -10,9 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Log who I am
     steps:
-      - name: Get output from whoami
+      - uses: balena-io-playground/github-actions/actions/whoami@master
         id: whoami
-        uses: ./
         with:
           api_token: ${{ secrets.BALENA_API_TOKEN }}
       - name: Log output from CLI
