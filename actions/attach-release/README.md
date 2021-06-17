@@ -12,16 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: balena-io-playground/github-actions/actions/build-release@master
-        name: build release
         id: build
         with:
           balena_token: ${{ secrets.BALENA_TOKEN }}
           application: hello-node
-      - run: echo "Built release ID ${{ steps.build.outputs.releaseId }}"
+      - run: echo "Built release ID ${{ steps.build.outputs.release_id }}"
       - uses: balena-io-playground/github-actions/actions/attach-release@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          release_id: ${{ steps.build.outputs.releaseId }}
+          release_id: ${{ steps.build.outputs.release_id }}
           target_name: build release # name of this check suite
 ```
 

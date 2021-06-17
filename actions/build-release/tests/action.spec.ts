@@ -29,7 +29,7 @@ const sampleBuildLog = `
 // Rewire the module so we can access private variables
 const action = rewire('../src/action');
 
-describe('action', async () => {
+describe('build-release action', async () => {
 	const setOutputSpy = spy(core, 'setOutput');
 	const application = 'hello-world';
 	const workspace = '/dev/null';
@@ -80,7 +80,7 @@ describe('action', async () => {
 		// Check for expected outputs to have been set via core.setOutput
 		expect(setOutputSpy.callCount).to.equal(1);
 		expect(setOutputSpy.getCall(0).args).to.have.all.members([
-			'releaseId',
+			'release_id',
 			'1825486',
 		]);
 	});

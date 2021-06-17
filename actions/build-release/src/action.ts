@@ -41,8 +41,8 @@ export async function run(): Promise<void> {
 
 		buildProcess.on('exit', () => {
 			if (releaseId) {
-				// Output build releaseId
-				core.setOutput('releaseId', releaseId);
+				// Output built release_id
+				core.setOutput('release_id', releaseId);
 				resolve();
 			} else {
 				reject('Was unable to find release ID from the build process.');

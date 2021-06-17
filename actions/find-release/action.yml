@@ -1,0 +1,16 @@
+# action.yml
+name: 'find-release'
+description: 'Finds a release ID from the target name check suite.'
+inputs:
+  github_token:
+    description: 'The GITHUB_TOKEN secret'
+    required: true
+  target_name:
+    description: 'Name of the check suite to look for release ID'
+    required: true
+outputs:
+  release_id:
+    description: 'ID of the release found'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

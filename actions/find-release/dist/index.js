@@ -28,28 +28,16 @@ function run() {
         else if (!github.context.payload.repository) {
             throw new Error('Context is missing repository data.');
         }
-        const releaseId = core.getInput('release_id', { required: true });
         const token = core.getInput('github_token', { required: true });
         octokit = github.getOctokit(token);
         const target = yield getTargetCheck(github.context.payload.repository.owner.login, github.context.payload.repository.name, github.context.payload.pull_request.head.sha, core.getInput('target_name', { required: true }));
-        yield updateRun(target.id, github.context.payload.repository.owner.login, github.context.payload.repository.name, releaseId);
+        if (!target.output.text && target.output.text.length < 1) {
+            throw new Error('Failed to find release text from target output.');
+        }
+        core.setOutput('release_id', target.output.text);
     });
 }
 exports.run = run;
-function updateRun(runId, owner, repo, releaseId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield octokit.request('PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}', {
-            owner,
-            repo,
-            check_run_id: runId,
-            output: {
-                title: 'Build release',
-                summary: 'Succssfully built a new release!',
-                text: releaseId,
-            },
-        });
-    });
-}
 function getTargetCheck(owner, repo, sha, target) {
     return __awaiter(this, void 0, void 0, function* () {
         const checks = yield getCheckRuns(owner, repo, sha);

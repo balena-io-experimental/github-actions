@@ -17,7 +17,7 @@ jobs:
           balena_token: ${{ secrets.BALENA_TOKEN }}
           application: hello-node
       - name: Log release ID built
-        run: echo "Built release ID ${{ steps.build.outputs.releaseId }}"
+        run: echo "Built release ID ${{ steps.build.outputs.release_id }}"
 ```
 
 ### Development

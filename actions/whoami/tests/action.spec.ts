@@ -7,7 +7,7 @@ import { expect } from './lib/chai';
 // Rewire the module so we can access private variables
 const action = rewire('../src/action');
 
-describe('action', async () => {
+describe('whoami action', async () => {
 	const setOutputSpy = spy(core, 'setOutput');
 
 	beforeEach(() => {

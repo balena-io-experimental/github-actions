@@ -9,7 +9,7 @@ inputs:
     description: 'Name of the application you want to build the release for'
     required: true
 outputs:
-  releaseId:
+  release_id:
     description: 'ID of the release built'
 runs:
   using: 'docker'

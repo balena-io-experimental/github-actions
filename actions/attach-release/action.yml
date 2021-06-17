@@ -1,6 +1,6 @@
 # action.yml
 name: 'attach-release'
-description: 'Attaches the input release Id to the current workflow'
+description: 'Attaches the input release Id to the target check suite.'
 inputs:
   github_token:
     description: 'The GITHUB_TOKEN secret'

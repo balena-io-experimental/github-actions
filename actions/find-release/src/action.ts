@@ -7,7 +7,6 @@ import { Api } from '@octokit/plugin-rest-endpoint-methods/dist-types/types';
 let octokit: Octokit & Api & { paginate: PaginateInterface };
 
 type CheckRun = {
-	id: number;
 	name: string;
 	output: {
 		title: string;
@@ -23,7 +22,6 @@ export async function run(): Promise<void> {
 	} else if (!github.context.payload.repository) {
 		throw new Error('Context is missing repository data.');
 	}
-	const releaseId = core.getInput('release_id', { required: true });
 	// Get configured client for making requests to GH
 	const token = core.getInput('github_token', { required: true });
 	octokit = github.getOctokit(token);
@@ -34,34 +32,12 @@ export async function run(): Promise<void> {
 		github.context.payload.pull_request.head.sha,
 		core.getInput('target_name', { required: true }),
 	);
-	// Add the releaseId to the target check
-	await updateRun(
-		target.id,
-		github.context.payload.repository.owner.login,
-		github.context.payload.repository.name,
-		releaseId,
-	);
-}
-
-async function updateRun(
-	runId: number,
-	owner: string,
-	repo: string,
-	releaseId: string,
-) {
-	await octokit.request(
-		'PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}',
-		{
-			owner,
-			repo,
-			check_run_id: runId,
-			output: {
-				title: 'Build release',
-				summary: 'Succssfully built a new release!',
-				text: releaseId,
-			},
-		},
-	);
+	// Check if the output has a text value
+	if (!target.output.text && target.output.text.length < 1) {
+		throw new Error('Failed to find release text from target output.');
+	}
+	// Set the output text as this is suppose to be the release_id
+	core.setOutput('release_id', target.output.text);
 }
 
 async function getTargetCheck(
@@ -82,7 +58,11 @@ async function getTargetCheck(
 	return check;
 }
 
-async function getCheckRuns(owner: string, repo: string, sha: string) {
+async function getCheckRuns(
+	owner: string,
+	repo: string,
+	sha: string,
+): Promise<any> {
 	return (
 		await octokit.request(
 			'GET /repos/{owner}/{repo}/commits/{ref}/check-runs',
