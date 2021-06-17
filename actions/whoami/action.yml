@@ -2,7 +2,7 @@
 name: 'whoami'
 description: 'Execute balena CLI whoami command'
 inputs:
-  api_token:
+  balena_token:
     description: 'Your balenaCloud API token'
     required: true
 outputs:
@@ -14,4 +14,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    API_TOKEN: ${{ inputs.api_token }}
+    BALENA_TOKEN: ${{ inputs.balena_token }}

@@ -2,7 +2,7 @@
 name: 'build'
 description: 'Send source to balenaCloud builders'
 inputs:
-  api_token:
+  balena_token:
     description: 'Your balenaCloud API token'
     required: true
   application:
@@ -15,6 +15,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    API_TOKEN: ${{ inputs.api_token }}
-  args:
-    - '${{ inputs.api_token }}'
+    BALENA_TOKEN: ${{ inputs.balena_token }}

@@ -1,0 +1,16 @@
+# action.yml
+name: 'attach-release'
+description: 'Attaches the input release Id to the current workflow'
+inputs:
+  github_token:
+    description: 'The GITHUB_TOKEN secret'
+    required: true
+  release_id:
+    description: 'ID of release to attach to workflow'
+    required: true
+  target_name:
+    description: 'Name of the check suite to attach release ID to'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

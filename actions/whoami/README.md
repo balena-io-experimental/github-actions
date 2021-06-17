@@ -13,7 +13,7 @@ jobs:
       - uses: balena-io-playground/github-actions/actions/whoami@master
         id: whoami
         with:
-          api_token: ${{ secrets.BALENA_API_TOKEN }}
+          balena_token: ${{ secrets.BALENA_TOKEN }}
       - name: Log output from CLI
         run: echo "You are authneitcated as ${{ steps.whoami.outputs.username }}"
 ```

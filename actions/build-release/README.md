@@ -14,7 +14,7 @@ jobs:
       - uses: balena-io-playground/github-actions/actions/build-release@master
         id: build
         with:
-          api_token: ${{ secrets.BALENA_API_TOKEN }}
+          balena_token: ${{ secrets.BALENA_TOKEN }}
           application: hello-node
       - name: Log release ID built
         run: echo "Built release ID ${{ steps.build.outputs.releaseId }}"
